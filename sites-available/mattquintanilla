@@ -1,0 +1,10 @@
+server {
+        listen 80 ;
+        listen [::]:80 ;
+        server_name mattquintanilla.xyz ;
+        root /var/www/mattquintanilla ;
+        index index.html index.htm index.nginx-debian.html bot.html resume.html ;
+        location /bot {
+                root /var/www/mattquintanilla;
+        }
+}

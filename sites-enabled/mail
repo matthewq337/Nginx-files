@@ -1,0 +1,32 @@
+server {
+
+    listen 80;
+
+    server_name mail.mattquintanilla.xyz ;
+    root /var/www/mail;
+
+    index index.php;
+
+    access_log /var/log/nginx/rainloop_access.log;
+    error_log /var/log/nginx/rainloop_error.log;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_index index.php;
+        fastcgi_split_path_info ^(.+\.php)(.*)$;
+        fastcgi_keep_conn on;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+    location ~ /\.ht {
+        deny all;
+    }
+
+    location ^~ /data {
+        deny all;
+    }
+}
